@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/reviews", (req, res) => {
   const { movie_id, review, rating, user_id } = req.body;
-  sql = `insert into reviews (movie_id,review,rating,user_id) values(?,?,?,?,now())`;
+  sql = `insert into reviews (movie_id,review,rating,user_id,modified) values(?,?,?,?,now())`;
   pool.query(sql, [movie_id, review, rating, user_id], (error, data) => {
     if (data) {
       res.send({ status: "success", data: data });
@@ -18,9 +18,9 @@ router.post("/reviews", (req, res) => {
 
 router.get("/myreview", (req, res) => {
   const { uid } = req.body;
-  sql = `select * form reviews where user_id=?`;
+  sql = `select * from reviews where user_id= ?`;
   pool.query(sql, [uid], (error, data) => {
-    if (data) {
+    if (data ) {
       res.send({ status: "success", data: data });
     } else {
       res.send({ status: "error", error: error });
@@ -40,7 +40,7 @@ router.delete("/myreview", (req, res) => {
   });
 });
 
-router.post("/myreview:id", (req, res) => {
+router.put("/myreview", (req, res) => {
   const { review, rating, id } = req.body;
   sql = `update reviews set review=? rating=? where id=?`;
   pool.query(sql, [review, rating, id], (error, data) => {

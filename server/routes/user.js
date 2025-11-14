@@ -3,7 +3,7 @@ const pool = require("../db/db");
 
 const router = express.Router();
 
-router.post("/changePassword", (req, res) => {
+router.put("/changePassword", (req, res) => {
   const { uid, newpassword } = req.body;
 
   const sql = `update users set password=? where id=?`;
@@ -16,7 +16,7 @@ router.post("/changePassword", (req, res) => {
   });
 });
 
-router.post("/edit", (req, res) => {
+router.put("/edit", (req, res) => {
   const { first_name, last_name, email, mobile, birth, uid } = req.body;
   sql = `update users set first_name =? last_name=? email=? mobile=? birth=? where id=?`;
   pool.query(
