@@ -4,6 +4,20 @@ const pool = require("../db/db");
 const router = express.Router();
 
 
+router.post('/changePassword', (req,res)=>{
+  const {uid,newpassword}= req.body;
+
+  const sql= `update users set password=? where id=?`
+  pool.query(sql,[newpassword,uid],(error,data)=>{
+   if (data) {
+        res.send({ status: "success", data: data });
+      } else {
+        res.send({ status: "error", error: error });
+      }
+ })
+});
+
+
 router.post('/edit',(req,res)=>{
 const {first_name, last_name, email, mobile, birth ,uid}=req.body
 sql=`update users set first_name =? last_name=? email=? mobile=? birth=? where id=?`
@@ -49,17 +63,17 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/:acc_no", (req, res) => {
-  const { acc_no } = req.params;
-  const sql = `select acc_no,name,email,password,phone,date,typeofAccount from Ebank_TB where acc_no=?`;
-  pool.query(sql, [acc_no], (error, data) => {
-    if (data != "") {
-      const user = data[0];
-      res.send({ status: "success", data: user });
-    } else {
-      res.send({ status: "error", error: error });
-    }
-  });
-});
+// router.get("/:acc_no", (req, res) => {
+//   const { acc_no } = req.params;
+//   const sql = `select acc_no,name,email,password,phone,date,typeofAccount from Ebank_TB where acc_no=?`;
+//   pool.query(sql, [acc_no], (error, data) => {
+//     if (data != "") {
+//       const user = data[0];
+//       res.send({ status: "success", data: user });
+//     } else {
+//       res.send({ status: "error", error: error });
+//     }
+//   });
+// });
 
 module.exports = router;

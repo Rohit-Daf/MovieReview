@@ -28,17 +28,19 @@ router.get("/myreview", (req, res) => {
   });
 });
 
-router.delete('/myreview:id',(req, res) => {
-    const {id}=req.params.id;
+router.delete('/myreview',(req, res) => {
+    const {id}=req.body;
   sql = `delete from reviews where id=?`;
-  pool.query(sql, [uid],(error, data) => {
+  pool.query(sql, [id],(error, data) => {
     if (data) {
       res.send({ status: "success", data: user });
     } else {
       res.send({ status: "error", error: error });
     }
-  });
+  })
 })
+
+
 
 router.post('/myreview:id',(req, res) => {
 
