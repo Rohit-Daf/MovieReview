@@ -4,11 +4,11 @@ const pool = require("../db/db");
 const router = express.Router();
 
 router.post("/register", (req, res) => {
-  const { firstName, lastName, email, phone, DateOfBirth, password } = req.body;
+  const { first_name, last_name, email, password, mobile, birth } = req.body;
   sql = `insert into users (first_name,last_name,email,password,mobile,birth) values(?,?,?,?,?,?)`;
   pool.query(
     sql,
-    [firstName, lastName, email, password, phone, DateOfBirth],
+    [first_name, last_name, email, password, mobile, birth],
     (error, data) => {
       if (data) {
         res.send({ status: "success", data: data });
@@ -47,7 +47,5 @@ router.get("/:acc_no", (req, res) => {
     }
   });
 });
-
-
 
 module.exports = router;
