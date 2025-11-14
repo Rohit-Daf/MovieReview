@@ -3,33 +3,34 @@ const pool = require("../db/db");
 
 const router = express.Router();
 
+router.post("/changePassword", (req, res) => {
+  const { uid, newpassword } = req.body;
 
-router.post('/changePassword', (req,res)=>{
-  const {uid,newpassword}= req.body;
+  const sql = `update users set password=? where id=?`;
+  pool.query(sql, [newpassword, uid], (error, data) => {
+    if (data) {
+      res.send({ status: "success", data: data });
+    } else {
+      res.send({ status: "error", error: error });
+    }
+  });
+});
 
-  const sql= `update users set password=? where id=?`
-  pool.query(sql,[newpassword,uid],(error,data)=>{
-   if (data) {
+router.post("/edit", (req, res) => {
+  const { first_name, last_name, email, mobile, birth, uid } = req.body;
+  sql = `update users set first_name =? last_name=? email=? mobile=? birth=? where id=?`;
+  pool.query(
+    sql,
+    [first_name, last_name, email, mobile, birth, uid],
+    (error, data) => {
+      if (data) {
         res.send({ status: "success", data: data });
       } else {
         res.send({ status: "error", error: error });
       }
- })
+    }
+  );
 });
-
-
-router.post('/edit',(req,res)=>{
-const {first_name, last_name, email, mobile, birth ,uid}=req.body
-sql=`update users set first_name =? last_name=? email=? mobile=? birth=? where id=?`
- pool.query(sql,[first_name, last_name, email, mobile, birth ,uid],(error,data)=>{
-   if (data) {
-        res.send({ status: "success", data: data });
-      } else {
-        res.send({ status: "error", error: error });
-      }
- })
-});
-
 
 router.post("/register", (req, res) => {
   const { first_name, last_name, email, password, mobile, birth } = req.body;
