@@ -21,6 +21,7 @@ function Login() {
             const response = await login(email, password)
             if (response['status'] == 'success') {
                 toast.success('login successful')
+                localStorage.setItem('email', response['data']['email'])
                 navigate('/home/allMovies')
             } else {
                 toast.error(response['error'])

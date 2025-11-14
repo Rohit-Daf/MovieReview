@@ -4,16 +4,16 @@ const pool = require("../db/db");
 const router = express.Router();
 
 router.post("/register", (req, res) => {
-  const { first_name, last_name, email, password, mobile, birth } = req.body;
+  const { firstName, lastName, email, phone, DateOfBirth, password } = req.body;
   sql = `insert into users (first_name,last_name,email,password,mobile,birth) values(?,?,?,?,?,?)`;
   pool.query(
     sql,
-    [first_name, last_name, email, password, mobile, birth],
+    [firstName, lastName, email, password, phone, DateOfBirth],
     (error, data) => {
       if (data) {
         res.send({ status: "success", data: data });
       } else {
-        res.send({ status: "error", error: "error" });
+        res.send({ status: "error", error: error });
       }
     }
   );

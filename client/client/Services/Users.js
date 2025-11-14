@@ -17,12 +17,12 @@ export async function login(email, password) {
   }
 }
 
-export async function register(firstName, lastName, email, phone, password) {
+export async function register(firstName, lastName, email, phone,DateOfBirth, password) {
   try {
     const url = `${config.server}/user/register`
 
     // create body
-    const body = { firstName, lastName, email, phone, password }
+    const body = { firstName, lastName, email, phone,DateOfBirth, password }
 
     const response = await axios.post(url, body)
 
