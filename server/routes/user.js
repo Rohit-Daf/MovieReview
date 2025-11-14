@@ -3,6 +3,20 @@ const pool = require("../db/db");
 
 const router = express.Router();
 
+
+router.post('/edit',(req,res)=>{
+const {first_name, last_name, email, mobile, birth ,uid}=req.body
+sql=`update users set first_name =? last_name=? email=? mobile=? birth=? where id=?`
+ pool.query(sql,[first_name, last_name, email, mobile, birth ,uid],(error,data)=>{
+   if (data) {
+        res.send({ status: "success", data: data });
+      } else {
+        res.send({ status: "error", error: error });
+      }
+ })
+});
+
+
 router.post("/register", (req, res) => {
   const { first_name, last_name, email, password, mobile, birth } = req.body;
   sql = `insert into users (first_name,last_name,email,password,mobile,birth) values(?,?,?,?,?,?)`;
