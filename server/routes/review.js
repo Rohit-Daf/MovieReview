@@ -21,7 +21,7 @@ router.get("/myreview", (req, res) => {
   sql = `select * form reviews where user_id=?`;
   pool.query(sql, [uid], (error, data) => {
     if (data) {
-      res.send({ status: "success", data: user });
+      res.send({ status: "success", data: data });
     } else {
       res.send({ status: "error", error: error });
     }
@@ -33,7 +33,7 @@ router.delete("/myreview", (req, res) => {
   sql = `delete from reviews where id=?`;
   pool.query(sql, [id], (error, data) => {
     if (data) {
-      res.send({ status: "success", data: user });
+      res.send({ status: "success", data: data });
     } else {
       res.send({ status: "error", error: error });
     }
@@ -45,7 +45,7 @@ router.post("/myreview:id", (req, res) => {
   sql = `update reviews set review=? rating=? where id=?`;
   pool.query(sql, [review, rating, id], (error, data) => {
     if (data) {
-      res.send({ status: "success", data: user });
+      res.send({ status: "success", data: data });
     } else {
       res.send({ status: "error", error: error });
     }
